@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Group Photo Gallery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3B82F6',
+              secondary: '#8B5CF6',
+              success: '#10B981',
+              warning: '#F59E0B',
+              dark: '#111827',
+              light: '#F9FAFB'
+            },
+            fontFamily: {
+              sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Open Sans', 'Helvetica Neue', 'sans-serif']
+            },
+          },
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .backdrop-blur-sm {
+          backdrop-filter: blur(8px);
+        }
+        .scale-hover {
+          @apply transition-transform duration-300 hover:scale-105;
+        }
+        .card-shadow {
+          @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
+        }
+      }
+    </style>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .photo-card img {
+        transition: transform 0.5s;
+      }
+      .photo-card:hover img {
+        transform: scale(1.1);
+      }
+      .modal-enter {
+        opacity: 0;
+      }
+      .modal-enter-active {
+        opacity: 1;
+        transition: opacity 0.3s;
+      }
+      .modal-exit {
+        opacity: 1;
+      }
+      .modal-exit-active {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .photo-overlay {
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .photo-card:hover .photo-overlay {
+        opacity: 1;
+      }
+      .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      @media (max-width: 640px) {
+        .photo-grid {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-30 w-full backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Research Group Photos</h1>
+        <button id="themeToggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon text-gray-700 dark:text-yellow-400"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- Category Filter -->
+      <div class="flex flex-wrap gap-3 mb-8 justify-center">
+        <button data-category="all" class="category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-blue-600 text-white shadow-lg shadow-blue-500/25">All Photos</button>
+        <button data-category="graduation" class="category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700">Graduation</button>
+        <button data-category="academic" class="category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700">Academic Activities</button>
+        <button data-category="gathering" class="category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700">Group Gatherings</button>
+      </div>
+
+      <!-- Photo Grid -->
+      <div id="photoGrid" class="photo-grid">
+        <!-- Photos will be inserted here by JavaScript -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6 border-t border-gray-200 dark:border-gray-800">
+      <div class="container mx-auto px-4 text-center text-sm text-gray-500 dark:text-gray-400">
+        <p>© 2026 Research Group Photo Gallery. All photos belong to their respective owners.</p>
+      </div>
+    </footer>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+      <div class="relative max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-gray-900 rounded-xl shadow-2xl">
+        <!-- Close button -->
+        <button id="closeModal" class="absolute top-4 right-4 z-10 bg-white/80 dark:bg-gray-800/80 p-2 rounded-full text-gray-800 dark:text-white hover:bg-white dark:hover:bg-gray-700 transition-colors" aria-label="Close">
+          <i class="fa-solid fa-times"></i>
+        </button>
+        
+        <!-- Image container -->
+        <div class="relative">
+          <img id="modalImage" src="" alt="Selected photo" class="w-full object-contain max-h-[70vh]" />
+        </div>
+        
+        <!-- Photo details -->
+        <div class="p-6">
+          <h3 id="modalTitle" class="text-2xl font-bold mb-2"></h3>
+          <p id="modalDescription" class="text-gray-600 dark:text-gray-300 mb-4"></p>
+          <div class="flex justify-between items-center">
+            <span id="modalDate" class="text-sm text-gray-500 dark:text-gray-400"></span>
+            <span id="modalCategory" class="px-3 py-1 rounded-full text-xs font-medium"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mock data for photos
+      const photos = [
+        // Graduation photos
+        {
+          id: '1',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=University%20graduation%20ceremony%20students%20in%20caps%20and%20gowns%20smiling%20together&sign=f9690f4369e5208aa58d0b6b72bee5d3',
+          alt: 'Graduation Ceremony',
+          category: 'graduation',
+          date: '2023-06-15',
+          description: 'Research group members at graduation ceremony'
+        },
+        {
+          id: '2',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Graduating%20students%20posing%20with%20research%20professor%20in%20lab&sign=69167506420528d4e453cc950c1ad258',
+          alt: 'Lab Group Photo',
+          category: 'graduation',
+          date: '2023-06-10',
+          description: 'Final group photo in the research laboratory'
+        },
+        {
+          id: '3',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?graduation%20with%20diplomas%20in%20hand=&image_size=portrait_4_3&prompt=Students%20celebrating&sign=7a3d50296ca5d9fbbc6a8334f14a15f4',
+          alt: 'Diploma Celebration',
+          category: 'graduation',
+          date: '2023-06-15',
+          description: 'Celebrating with diplomas after the ceremony'
+        },
+        
+        // Academic activity photos
+        {
+          id: '4',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Research%20conference%20presentation%20lecture%20hall%20with%20audience&sign=30760f322d191bba1426a3b24f80768d',
+          alt: 'Conference Presentation',
+          category: 'academic',
+          date: '2023-04-22',
+          description: 'Group member presenting research at international conference'
+        },
+        {
+          id: '5',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Research%20team%20brainstorming%20meeting%20around%20table&sign=28e46adfa9038a1a08177e49dbb404ef',
+          alt: 'Group Meeting',
+          category: 'academic',
+          date: '2023-03-15',
+          description: 'Weekly research group brainstorming session'
+        },
+        {
+          id: '6',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_16_9&prompt=Scientists%20working%20together%20in%20modern%20laboratory&sign=cf5ea20b8120013dfe7f66a05ee164e9',
+          alt: 'Lab Work',
+          category: 'academic',
+          date: '2023-05-08',
+          description: 'Daily research work in the laboratory'
+        },
+        {
+          id: '7',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_4_3&prompt=Workshop%20participants%20collaborating%20on%20project&sign=4a37abbac2722ac0752d057865be98bc',
+          alt: 'Workshop',
+          category: 'academic',
+          date: '2023-02-28',
+          description: 'Research methodology workshop participants'
+        },
+        {
+          id: '8',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Guest%20lecturer%20giving%20talk%20to%20research%20group&sign=30824326b6e8a5bcef182f0a8886096c',
+          alt: 'Guest Lecture',
+          category: 'academic',
+          date: '2023-01-15',
+          description: 'Guest speaker from industry giving a lecture'
+        },
+        
+        // Group gathering photos
+        {
+          id: '9',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Research%20group%20dinner%20party%20celebrating%20success&sign=4fa7e99c11f34350fcf76687c14d3f5e',
+          alt: 'Dinner Party',
+          category: 'gathering',
+          date: '2023-12-20',
+          description: 'Annual research group holiday dinner celebration'
+        },
+        {
+          id: '10',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Team%20outing%20picnic%20in%20park&sign=24a451fa814d0284191af9f5b86fd67d',
+          alt: 'Park Picnic',
+          category: 'gathering',
+          date: '2023-09-15',
+          description: 'Team building picnic in the city park'
+        },
+        {
+          id: '11',
+          src: 'https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_4_3&prompt=Research%20group%20hiking%20trip&sign=0ac3ea9db6ecb02467ea8ad6db823046',
+          alt: 'Hiking Trip',
+          category: 'gathering',
+          date: '2023-10-05',
+          description: 'Weekend hiking trip with the research team'
+        }
+      ];
+
+      // DOM Elements
+      const photoGrid = document.getElementById('photoGrid');
+      const categoryButtons = document.querySelectorAll('.category-btn');
+      const photoModal = document.getElementById('photoModal');
+      const closeModal = document.getElementById('closeModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDescription = document.getElementById('modalDescription');
+      const modalDate = document.getElementById('modalDate');
+      const modalCategory = document.getElementById('modalCategory');
+      const themeToggle = document.getElementById('themeToggle');
+
+      // Initialize
+      let activeCategory = 'all';
+      renderPhotos(photos);
+
+      // Event Listeners
+      categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          activeCategory = button.getAttribute('data-category');
+          updateCategoryButtons();
+          filterAndRenderPhotos();
+        });
+      });
+
+      closeModal.addEventListener('click', closePhotoModal);
+      photoModal.addEventListener('click', (e) => {
+        if (e.target === photoModal) {
+          closePhotoModal();
+        }
+      });
+
+      // Theme Toggle
+      themeToggle.addEventListener('click', toggleTheme);
+      
+      // Check user preference for dark mode
+      if (localStorage.getItem('theme') === 'dark' || 
+          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        updateThemeIcon();
+      }
+
+      // Keyboard navigation for modal
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !photoModal.classList.contains('hidden')) {
+          closePhotoModal();
+        }
+      });
+
+      // Functions
+      function renderPhotos(photoList) {
+        photoGrid.innerHTML = '';
+        
+        if (photoList.length === 0) {
+          photoGrid.innerHTML = '<div class="col-span-full flex justify-center items-center py-12 text-gray-500 dark:text-gray-400">No photos found</div>';
+          return;
+        }
+        
+        photoList.forEach(photo => {
+          const card = document.createElement('div');
+          card.className = 'photo-card relative overflow-hidden rounded-xl cursor-pointer aspect-square group card-shadow';
+          card.setAttribute('data-photo-id', photo.id);
+          
+          // Get category style
+          let categoryClass = '';
+          let categoryName = '';
+          
+          if (photo.category === 'graduation') {
+            categoryClass = 'bg-green-500/90 text-white';
+            categoryName = 'Grad';
+          } else if (photo.category === 'academic') {
+            categoryClass = 'bg-purple-500/90 text-white';
+            categoryName = 'Academic';
+          } else {
+            categoryClass = 'bg-orange-500/90 text-white';
+            categoryName = 'Gathering';
+          }
+          
+          card.innerHTML = `
+            <img src="${photo.src}" alt="${photo.alt}" class="w-full h-full object-cover" loading="lazy" />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent photo-overlay flex flex-col justify-end p-4">
+              <h3 class="text-white font-medium text-lg truncate">${photo.alt}</h3>
+              <p class="text-gray-200 text-sm truncate">${photo.description}</p>
+            </div>
+            <span class="absolute top-3 right-3 px-2 py-1 rounded-md text-xs font-medium ${categoryClass}">
+              ${categoryName}
+            </span>
+          `;
+          
+          card.addEventListener('click', () => openPhotoModal(photo));
+          photoGrid.appendChild(card);
+        });
+      }
+
+      function updateCategoryButtons() {
+        categoryButtons.forEach(button => {
+          const category = button.getAttribute('data-category');
+          if (category === activeCategory) {
+            if (category === 'all') {
+              button.className = 'category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-blue-600 text-white shadow-lg shadow-blue-500/25';
+            } else if (category === 'graduation') {
+              button.className = 'category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-green-600 text-white shadow-lg shadow-green-500/25';
+            } else if (category === 'academic') {
+              button.className = 'category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-purple-600 text-white shadow-lg shadow-purple-500/25';
+            } else if (category === 'gathering') {
+              button.className = 'category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-orange-600 text-white shadow-lg shadow-orange-500/25';
+            }
+          } else {
+            button.className = 'category-btn px-6 py-2 rounded-full text-sm font-medium transition-all scale-hover bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700';
+          }
+        });
+      }
+
+      function filterAndRenderPhotos() {
+        let filteredPhotos;
+        
+        if (activeCategory === 'all') {
+          filteredPhotos = photos;
+        } else {
+          filteredPhotos = photos.filter(photo => photo.category === activeCategory);
+        }
+        
+        renderPhotos(filteredPhotos);
+      }
+
+      function openPhotoModal(photo) {
+        modalImage.src = photo.src;
+        modalImage.alt = photo.alt;
+        modalTitle.textContent = photo.alt;
+        modalDescription.textContent = photo.description;
+        
+        // Format date
+        const date = new Date(photo.date);
+        modalDate.textContent = date.toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        // Set category style
+        let categoryClass = '';
+        let categoryName = photo.category.charAt(0).toUpperCase() + photo.category.slice(1);
+        
+        if (photo.category === 'graduation') {
+          categoryClass = 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100';
+        } else if (photo.category === 'academic') {
+          categoryClass = 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100';
+        } else {
+          categoryClass = 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-100';
+        }
+        
+        modalCategory.className = `px-3 py-1 rounded-full text-xs font-medium ${categoryClass}`;
+        modalCategory.textContent = categoryName;
+        
+        // Show modal with animation
+        photoModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+      }
+
+      function closePhotoModal() {
+        photoModal.classList.add('hidden');
+        document.body.style.overflow = ''; // Re-enable scrolling
+      }
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        updateThemeIcon();
+        localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      }
+
+      function updateThemeIcon() {
+        const icon = themeToggle.querySelector('i');
+        if (document.documentElement.classList.contains('dark')) {
+          icon.className = 'fa-solid fa-sun text-yellow-400';
+        } else {
+          icon.className = 'fa-solid fa-moon text-gray-700';
+        }
+      }
+    </script>
+  </body>
+</html>
