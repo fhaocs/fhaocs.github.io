@@ -1,164 +1,471 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)https://yaobaiwei.github.io/#publications -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="google-site-verification" content="pBtZNGyUAfNU9UcfD_CFn3eAjppawMdIh2JXpEI3bjA">
-<meta name="baidu-site-verification" content="nqnQH8EBbV">
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<link rel="stylesheet" type="text/css" href="./Hongzhi Chen&#39;s Homepage [陈宏智]_files/style.css">
 <title>List of Readings</title>
-<script async src="./Hongzhi Chen&#39;s Homepage [陈宏智]_files/analytics.js.下载"></script><script async>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<meta name="description" content="A curated reading list of papers on Formal Concept Analysis and its applications. Download PDFs directly.">
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --bg-elevated: #ffffff;
+    --surface-hover: #f1f3f6;
+    --border: #e4e7ec;
+    --text: #1a1d21;
+    --text-muted: #6b7280;
+    --text-faint: #9ca3af;
+    --accent: #4f46e5;
+    --accent-hover: #4338ca;
+    --accent-soft: #eef2ff;
+    --accent-text: #4338ca;
+    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.04);
+    --shadow-lg: 0 10px 25px -5px rgba(16,24,40,.12), 0 8px 10px -6px rgba(16,24,40,.06);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  html[data-theme="dark"] {
+    --bg: #0d1117;
+    --bg-elevated: #161b22;
+    --surface-hover: #1c232c;
+    --border: #2a313c;
+    --text: #e6edf3;
+    --text-muted: #9aa4b2;
+    --text-faint: #6e7681;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-soft: #1d2333;
+    --accent-text: #a5b4fc;
+    --shadow: 0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,.5);
+  }
 
-  ga('create', 'UA-71295941-1', 'auto');
-  ga('send', 'pageview');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-</script>
-<script type="text/javascript" src="./Hongzhi Chen&#39;s Homepage [陈宏智]_files/jquery-1.12.4.min.js.下载"></script></head>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s ease, color .25s ease;
+  }
 
-<body style="background-color:#FFFFFF;">
-  <div id="main">
-  	<h1>List of Readings</h1>
-  	<div id="header"></div>
-    <div id="contentColumn">
-	
+  a { color: inherit; text-decoration: none; }
 
+  .skip-link {
+    position: absolute; left: -999px; top: 0;
+    background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 0 0 8px 0; z-index: 100;
+  }
+  .skip-link:focus { left: 0; }
 
+  /* ---------- Header ---------- */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg-elevated) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner {
+    max-width: 920px; margin: 0 auto; padding: 16px 20px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .brand-mark {
+    flex: none; width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #8b5cf6);
+    display: grid; place-items: center; color: #fff;
+  }
+  .brand-text h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+  .brand-text p { font-size: .8rem; color: var(--text-muted); white-space: nowrap; }
 
-    <div class="contentBlock"></div>
+  .header-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .icon-btn {
+    flex: none; width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--bg-elevated);
+    color: var(--text); cursor: pointer; display: grid; place-items: center;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .icon-btn:hover { background: var(--surface-hover); }
+  .icon-btn svg { width: 18px; height: 18px; }
 
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .875rem; font-weight: 600; cursor: pointer;
+    border-radius: 10px; padding: 9px 14px; border: 1px solid transparent;
+    transition: background .15s ease, color .15s ease, border-color .15s ease, transform .05s ease;
+    white-space: nowrap;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost { background: var(--bg-elevated); border-color: var(--border); color: var(--text); }
+  .btn-ghost:hover { background: var(--surface-hover); }
 
-  
-        <h2>Social Computing &amp; Formal Concept Analysis</h2>
-       
+  /* ---------- Toolbar ---------- */
+  .toolbar {
+    max-width: 920px; margin: 0 auto; padding: 20px 20px 0;
+  }
+  .search-wrap { position: relative; }
+  .search-wrap svg {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 18px; height: 18px; color: var(--text-faint); pointer-events: none;
+  }
+  #search {
+    width: 100%; padding: 12px 44px 12px 44px; font-size: .95rem;
+    border: 1px solid var(--border); border-radius: var(--radius);
+    background: var(--bg-elevated); color: var(--text); outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  #search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .search-clear {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    width: 26px; height: 26px; border-radius: 6px; border: none; background: transparent;
+    color: var(--text-faint); cursor: pointer; display: none; place-items: center;
+  }
+  .search-clear:hover { background: var(--surface-hover); color: var(--text); }
+  .search-clear svg { width: 15px; height: 15px; }
 
-        <div class="publication">
-            <ul>
-                <li><strong><a href="./paper1.pdf">When Social Computing Meets Soft Computing: Opportunities and
-Insights</a></strong></a><br> 
-                  <strong>Fei Hao</strong>, Doo-Soon Park, Zheng Pei<br>
-                  <strong>Human-centric Computing and Information Sciences</strong>, 8:8, pp.1-18, 2018.</li>
-                <li><strong><a href="./paper2.pdf">k-clique Communities Detection in Social Networks based on Formal Concept Analysis</a></strong><br>
-                  <strong>Fei Hao</strong>, Geyong Min, Zheng Pei, Doo-Soon Park, Laurence T. Yang<br>
-                  <strong>IEEE Systems Journal</strong>, Vol.11, No.1, pp.250-259, 2017.</li>
-                
-                <li><strong><a href="./paper3.pdf">Iceberg Clique Queries in Large Graphs</a></strong><br>
-                  <strong>Fei Hao</strong>, Zheng Pei, Doo-Soon Park, Laurence T. Yang, Young-Sik Jeong, Jong-Hyuk Park<br>
-                <strong>Neurocomputing</strong>, Vol.256, pp.101-110, 2017.</li>
-                
-                  <li><strong><a href="./paper4.pdf">k-cliques Mining in Dynamic Social Networks based on Triadic Formal Concept Analysis</a></strong><br>
-                  <strong>Fei Hao</strong>, Doo-Soon Park, Geyong Min, Young-Sik Jeong, Jong-Hyuk Park<br>
-                <strong>Neurocomputing</strong>, Vol.209, pp.57- 66, 2016. </li>
-                 <li><strong><a href="./paper5.pdf">Diversified Top-k Maximal Clique Detection in Social Internet of Things</a></strong><br>
-                   <strong>Fei Hao</strong>, Zheng Pei, Laurence T. Yang<br>
-                 <strong>Future Generation Computer Systems</strong>, Vol.107, pp.408-417, 2020. </li>
-                 <li><strong><a href="./paper6.pdf">Detecting Communities in Social Networks Using Concept Interestingness</a></strong><br>
-Mohamed-Hamza Ibrahim<strong>, </strong>Rokia Missaoui, Abir Messaoudi<br>
-Proceedings of 28th Annual International Conference on Computer Science and Software Engineering (CASCON’18), 2018. </li>  
-  <li><strong><a href="https://fhaocs.github.io/TEAMS/appsci.pdf">On the Computation of Concept Stability Based on Maximal Nongenerator for Social Networking Services</a></strong><br>
-                  Jie Gao, <strong>Fei Hao</strong>, Doo-Soon Park<br>
-                <strong>Applied Sciences</strong>, Vol.10, No.23, pp.8618, 2020. </li>
-				
-				<li><strong><a href="./paper13.pdf">Learning Concept Interestingness for Identifying
-Key Structures from Social Networks</a></strong><br>
-                   Jie Gao, <strong>Fei Hao</strong>, Zheng Pei, Geyong Min<br>
-                 <strong>IEEE Transactions on Network Science and Engineering</strong>,2021. </li>
-	    
-	    <li><strong><a href="./paper11.pdf">Dynamic Maximal Cliques Detection and
-Evolution Management in Social Internet of Things: A Formal Concept Analysis Approach</a></strong><br>
-                   Yixuan Yang, <strong>Fei Hao</strong>, Beibei Pang, Geyong Min, Yulei Wu<br>
-                 <strong>IEEE Transactions on Network Science and Engineering</strong>,2021. </li> 
-				 
-    <li><strong><a href="./paper16.pdf">Traffic Prediction Based on Formal Concept-Enhanced Federated Graph Learning</a></strong><br>
-                   Kai Wu, <strong>Fei Hao</strong>, Ruoxia Yao, Jinhai Li, Geyong Min, Sergei O. Kuznetsov<br>
-                 <strong>IEEE Transactions on Intelligent Transportation Systems</strong>,2024. </li> 
+  .controls { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip {
+    font-size: .82rem; font-weight: 600; padding: 7px 13px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-muted);
+    cursor: pointer; transition: all .15s ease; white-space: nowrap;
+  }
+  .chip:hover { color: var(--text); border-color: var(--text-faint); }
+  .chip.active { background: var(--accent-soft); color: var(--accent-text); border-color: transparent; }
+  .count { margin-left: auto; font-size: .82rem; color: var(--text-muted); white-space: nowrap; }
 
-		    <li><strong><a href="./paper17.pdf">Fairness-Aware Maximal Cliques Identification in Attributed Social Networks With Concept-Cognitive Learning
-</a></strong><br>
-                   Min Tao, <strong>Fei Hao</strong>, Ling Wei, Huilai Zhi, Sergei O. Kuznetsov, and Geyong Min<br>
-                 <strong>IEEE Transactions on Computational Social Systems</strong>, 2024. </li>  
+  /* ---------- Sections / Cards ---------- */
+  main { max-width: 920px; margin: 0 auto; padding: 8px 20px 60px; }
+  .section { margin-top: 28px; }
+  .section-head {
+    display: flex; align-items: center; gap: 10px; margin: 8px 0 14px;
+  }
+  .section-head h2 { font-size: 1.05rem; font-weight: 700; letter-spacing: -.01em; }
+  .section-head .badge {
+    font-size: .72rem; font-weight: 600; color: var(--text-faint);
+    background: var(--surface-hover); padding: 2px 9px; border-radius: 999px;
+  }
+  .section-head .line { flex: 1; height: 1px; background: var(--border); }
 
-                 <li><strong><a href="./paper18.pdf">Towards Graph Concept-cognitive Learning: A Survey and Beyond
-</a></strong><br>
-                   <strong>Fei Hao</strong>, Mengyu Yan, Jinhai Li, and Weihua Xu:<br>
-                 <strong>Information Fusion</strong>, 2026. </li> 
+  .card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px;
+    box-shadow: var(--shadow); transition: border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+  }
+  .card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); }
+  .card .meta { min-width: 0; flex: 1; }
+  .card .cat-tag {
+    display: inline-block; font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+    text-transform: uppercase; color: var(--accent-text); background: var(--accent-soft);
+    padding: 2px 8px; border-radius: 6px; margin-bottom: 6px;
+  }
+  .card .title { font-size: .98rem; font-weight: 650; line-height: 1.4; color: var(--text); }
+  .card .title:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .card .authors { font-size: .82rem; color: var(--text-muted); margin-top: 3px;
+    overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+  .card .venue { font-size: .8rem; color: var(--text-faint); margin-top: 2px; }
+  .card .venue b { color: var(--text-muted); font-weight: 600; }
 
-                   <li><strong><a href="./paper19.pdf">Vertex Entanglement-enhanced Graph Contrastive Learning for Social Networks
-</a></strong><br>
-                   Xinlan Xu, <strong>Fei Hao</strong>, Bo Li, Hongying Zhang, Wangyang Yu, and Geyong Min:<br>
-                 <strong>IEEE Transactions on Computational Social Systems</strong>, 2026. </li> 
+  .card .action { flex: none; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: .82rem; font-weight: 650; padding: 9px 14px; border-radius: var(--radius-sm);
+    background: var(--accent); color: #fff; border: 1px solid transparent; cursor: pointer;
+    transition: background .15s ease, transform .05s ease; white-space: nowrap;
+  }
+  .dl-btn:hover { background: var(--accent-hover); }
+  .dl-btn:active { transform: translateY(1px); }
+  .dl-btn svg { width: 15px; height: 15px; }
+  .dl-btn.ext { background: var(--bg-elevated); color: var(--accent-text); border-color: var(--border); }
+  .dl-btn.ext:hover { background: var(--accent-soft); }
+  .dl-btn.na { background: var(--surface-hover); color: var(--text-faint); border-color: var(--border); cursor: not-allowed; }
 
-            </ul>
+  .hidden { display: none !important; }
 
-        </div>
-        
-                <h2>Cloud Computing/Edge Computing &amp; Formal Concept Analysis</h2>
-       
+  /* ---------- Empty state ---------- */
+  .empty {
+    text-align: center; padding: 60px 20px; color: var(--text-muted);
+  }
+  .empty svg { width: 44px; height: 44px; color: var(--text-faint); margin-bottom: 12px; }
+  .empty p { font-size: .95rem; }
 
-        <div class="publication">
-            <ul>
-                <li><strong><a href="./paper7.pdf">Multi-cloud service composition using Formal Concept Analysis</a></strong><br>
-                  Haithem Mezni, Mokhtar Sellami<br>
-                  <strong>The Journal of Systems and Software</strong>, 134, pp.138-152, 2017.</li>
-                <li><strong><a href="./paper8.pdf">Virtual Machines Scheduling
-in Mobile Edge Computing: A Formal Concept Analysis Approach</a></strong><br>
-                  <strong>Fei Hao, </strong>Guangyao Pang, Zheng Pei, Keyun Qin, Yu Zhang, Xiaoming Wang<br>
-                  <strong>IEEE Transactions on Sustainable Computing.</strong></li>
-		     <li><strong><a href="./paper14.pdf">A Socially-Aware Dependent Tasks Ofﬂoading
-Strategy in Mobile Edge Computing</a></strong><br>
-                  Yanqi Gong, <strong>Fei Hao</strong>, Liang Wang, Liang Zhao, and Geyong Min<br>
-                  <strong>IEEE Transactions on Sustainable Computing.</strong></li>
-		       <li><strong><a href="./paper15.pdf">DRL-Based Joint Optimization of Wireless Charging
-and Computation Ofﬂoading for Multi-Access Edge Computing</a></strong>, 2025.<br>
-                  Xinyuan Zhu, <strong>Fei Hao</strong>, Lianbo Ma, Changqing Luo, Geyong Min and Laurence T. Yang<br>
-                  <strong>IEEE Transactions on Services Computing.</strong>, 2025.</li>
-            </ul>
-        </div>
-        
-         <h2>Knowledge Graph &amp; Formal Concept Analysis</h2>
-       
+  /* ---------- Toast ---------- */
+  #toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+    background: var(--text); color: var(--bg); font-size: .85rem; font-weight: 600;
+    padding: 11px 18px; border-radius: 10px; box-shadow: var(--shadow-lg);
+    opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 50;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #toast svg { width: 16px; height: 16px; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        <div class="publication">
-            <ul>
-              <li><strong><a href="./paper9.pdf">Entity Summarization Based on Formal Concept Analysis</a></strong><br>
-                  Eun-kyung Kim, Key-Sun Choi<br>
-                <strong>CIKM 2018</strong>, 2018.</li>
-		   <li><strong><a href="./paper12.pdf">Incremental Entity Summarization with Formal Concept Analysis</a></strong><br>
-                  Erhe Yang, <strong>Fei Hao*</strong>, Yixuan Yang, Carmen De Maio, Aziz Nasridinov, Geyong Min, Laurence T. Yang<br>
-                <strong>CIKM 2018</strong>, 2018.</li>
-                <li><strong><a href="https://fhaocs.github.io/TEAMS/ICKG.pdf">Entity Spatio-temporal Evolution Summarization in Knowledge Graphs</a></strong><br>
-                  Erhe Yang, <strong>Fei Hao*</strong>, Jie Gao, Yulei Wu, Geyong Min<br>
-                <strong>ICKG 2020</strong>, 2020.</li>
-            </ul>
-        </div>
+  footer {
+    max-width: 920px; margin: 0 auto; padding: 24px 20px 48px;
+    border-top: 1px solid var(--border); color: var(--text-faint); font-size: .8rem;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
 
+  @media (max-width: 560px) {
+    .card { flex-direction: column; align-items: stretch; gap: 12px; }
+    .card .action { width: 100%; }
+    .dl-btn { width: 100%; justify-content: center; }
+    .brand-text p { display: none; }
+    .count { width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
 
-  <h2>Formal Concept Analysis Toolkits</h2>
-       
-
-        <div class="publication">
-            <ul>
-              <li><strong><a href="https://fca-tools-bundle.com/public-contexts">Public Formal Context</a></strong></li>
-              <li><a href="https://www.upriss.org.uk/fca/fcasoftware.html"><strong>Softwares</strong></a></li>
-			  <li><a href="https://github.com/xflr6/concepts"><strong>FCA Python(Visualization Toolkits)</strong></a></li>
-            </ul>
-        </div>
-
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+      </div>
+      <div class="brand-text">
+        <h1>List of Readings</h1>
+        <p>Formal Concept Analysis &amp; applications</p>
+      </div>
     </div>
-
-    <div class="contentBlock"></div>
-    <div class="contentBlock">    </div>
-
+    <div class="header-actions">
+      <button class="btn btn-primary" id="downloadAll" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download all
+      </button>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
   </div>
+</header>
 
-  <footer>
-    <div class="row"></div>
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="search" type="search" placeholder="Search by title or author…" aria-label="Search papers" autocomplete="off">
+    <button class="search-clear" id="searchClear" type="button" aria-label="Clear search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="controls">
+    <div class="chips" id="chips" role="tablist" aria-label="Filter by category"></div>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<div class="empty hidden" id="empty">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <p>No papers match your search.</p>
+</div>
+
+<footer>
+  <span>A curated reading list — click any card to download the PDF.</span>
+  <span id="footerStat"></span>
 </footer>
 
+<div id="toast" role="status" aria-live="polite"></div>
 
+<script>
+(function () {
+  "use strict";
 
+  // ---- Paper data (local files use ./paperN.pdf; external links open in new tab) ----
+  var papers = [
+    { cat: "Social Computing", title: "When Social Computing Meets Soft Computing: Opportunities and Insights", authors: "Fei Hao, Doo-Soon Park, Zheng Pei", venue: "Human-centric Computing and Information Sciences", year: "2018", file: "./paper1.pdf" },
+    { cat: "Social Computing", title: "k-clique Communities Detection in Social Networks based on Formal Concept Analysis", authors: "Fei Hao, Geyong Min, Zheng Pei, Doo-Soon Park, Laurence T. Yang", venue: "IEEE Systems Journal", year: "2017", file: "./paper2.pdf" },
+    { cat: "Social Computing", title: "Iceberg Clique Queries in Large Graphs", authors: "Fei Hao, Zheng Pei, Doo-Soon Park, Laurence T. Yang, Young-Sik Jeong, Jong-Hyuk Park", venue: "Neurocomputing", year: "2017", file: "./paper3.pdf" },
+    { cat: "Social Computing", title: "k-cliques Mining in Dynamic Social Networks based on Triadic Formal Concept Analysis", authors: "Fei Hao, Doo-Soon Park, Geyong Min, Young-Sik Jeong, Jong-Hyuk Park", venue: "Neurocomputing", year: "2016", file: "./paper4.pdf" },
+    { cat: "Social Computing", title: "Diversified Top-k Maximal Clique Detection in Social Internet of Things", authors: "Fei Hao, Zheng Pei, Laurence T. Yang", venue: "Future Generation Computer Systems", year: "2020", file: "./paper5.pdf" },
+    { cat: "Social Computing", title: "Detecting Communities in Social Networks Using Concept Interestingness", authors: "Mohamed-Hamza Ibrahim, Rokia Missaoui, Abir Messaoudi", venue: "CASCON '18", year: "2018", file: "./paper6.pdf" },
+    { cat: "Social Computing", title: "On the Computation of Concept Stability Based on Maximal Nongenerator for Social Networking Services", authors: "Jie Gao, Fei Hao, Doo-Soon Park", venue: "Applied Sciences", year: "2020", url: "https://fhaocs.github.io/TEAMS/appsci.pdf" },
+    { cat: "Social Computing", title: "Learning Concept Interestingness for Identifying Key Structures from Social Networks", authors: "Jie Gao, Fei Hao, Zheng Pei, Geyong Min", venue: "IEEE Transactions on Network Science and Engineering", year: "2021", file: "./paper13.pdf" },
+    { cat: "Social Computing", title: "Dynamic Maximal Cliques Detection and Evolution Management in Social Internet of Things: A Formal Concept Analysis Approach", authors: "Yixuan Yang, Fei Hao, Beibei Pang, Geyong Min, Yulei Wu", venue: "IEEE Transactions on Network Science and Engineering", year: "2021", file: "./paper11.pdf" },
+    { cat: "Social Computing", title: "Traffic Prediction Based on Formal Concept-Enhanced Federated Graph Learning", authors: "Kai Wu, Fei Hao, Ruoxia Yao, Jinhai Li, Geyong Min, Sergei O. Kuznetsov", venue: "IEEE Transactions on Intelligent Transportation Systems", year: "2024", file: "./paper16.pdf"  },
+    { cat: "Social Computing", title: "Fairness-Aware Maximal Cliques Identification in Attributed Social Networks With Concept-Cognitive Learning", authors: "Min Tao, Fei Hao, Ling Wei, Huilai Zhi, Sergei O. Kuznetsov, Geyong Min", venue: "IEEE Transactions on Computational Social Systems", year: "2024",file: "./paper17.pdf"},
+    { cat: "Social Computing", title: "Towards Graph Concept-cognitive Learning: A Survey and Beyond", authors: "Fei Hao, Mengyu Yan, Jinhai Li, Weihua Xu", venue: "Information Fusion", year: "2026", file: "./paper19.pdf" },
+    { cat: "Social Computing", title: "Vertex Entanglement-enhanced Graph Contrastive Learning for Social Networks", authors: "Xinlan Xu, Fei Hao, Bo Li, Hongying Zhang, Wangyang Yu, Geyong Min", venue: "IEEE Transactions on Computational Social Systems", year: "2026", file: "./paper18.pdf" },
 
-</div><div class="jvectormap-tip"></div></body></html>
+    { cat: "Cloud & Edge Computing", title: "Multi-cloud service composition using Formal Concept Analysis", authors: "Haithem Mezni, Mokhtar Sellami", venue: "The Journal of Systems and Software", year: "2017", file: "./paper7.pdf" },
+    { cat: "Cloud & Edge Computing", title: "Virtual Machines Scheduling in Mobile Edge Computing: A Formal Concept Analysis Approach", authors: "Fei Hao, Guangyao Pang, Zheng Pei, Keyun Qin, Yu Zhang, Xiaoming Wang", venue: "IEEE Transactions on Sustainable Computing", year: "2020", file: "./paper8.pdf" },
+    { cat: "Cloud & Edge Computing", title: "A Socially-Aware Dependent Tasks Offloading Strategy in Mobile Edge Computing", authors: "Yanqi Gong, Fei Hao, Liang Wang, Liang Zhao, Geyong Min", venue: "IEEE Transactions on Sustainable Computing", year: "2023", file: "./paper14.pdf" },
+    { cat: "Cloud & Edge Computing", title: "DRL-Based Joint Optimization of Wireless Charging and Computation Offloading for Multi-Access Edge Computing", authors: "Xinyuan Zhu, Fei Hao, Lianbo Ma, Changqing Luo, Geyong Min, Laurence T. Yang", venue: "IEEE Transactions on Services Computing", year: "2025" , file: "./paper15.pdf"},
+
+    { cat: "Knowledge Graph", title: "Entity Summarization Based on Formal Concept Analysis", authors: "Eun-kyung Kim, Key-Sun Choi", venue: "CIKM 2018", year: "2018", file: "./paper9.pdf" },
+    { cat: "Knowledge Graph", title: "Incremental Entity Summarization with Formal Concept Analysis", authors: "Erhe Yang, Fei Hao, Yixuan Yang, Carmen De Maio, Aziz Nasridinov, Geyong Min, Laurence T. Yang", venue: "CIKM 2018", year: "2018", file: "./paper12.pdf" },
+    { cat: "Knowledge Graph", title: "Entity Spatio-temporal Evolution Summarization in Knowledge Graphs", authors: "Erhe Yang, Fei Hao, Jie Gao, Yulei Wu, Geyong Min", venue: "ICKG 2020", year: "2020", url: "https://fhaocs.github.io/TEAMS/ICKG.pdf" },
+
+    { cat: "Toolkits", title: "Public Formal Context", authors: "FCA Tools Bundle", venue: "fca-tools-bundle.com", year: "", url: "https://fca-tools-bundle.com/public-contexts" },
+    { cat: "Toolkits", title: "Softwares", authors: "UPRiss FCA", venue: "upriss.org.uk", year: "", url: "https://www.upriss.org.uk/fca/fcasoftware.html" },
+    { cat: "Toolkits", title: "FCA Python (Visualization Toolkits)", authors: "concepts · xflr6", venue: "github.com", year: "", url: "https://github.com/xflr6/concepts" }
+  ];
+
+  var SVG_DL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+  var SVG_EXT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+
+  var main = document.getElementById("main");
+  var chipsEl = document.getElementById("chips");
+  var countEl = document.getElementById("count");
+  var emptyEl = document.getElementById("empty");
+  var searchEl = document.getElementById("search");
+  var clearEl = document.getElementById("searchClear");
+  var footerStat = document.getElementById("footerStat");
+
+  var activeCat = "All";
+  var query = "";
+
+  // ---- Build category chips ----
+  var cats = ["All"];
+  papers.forEach(function (p) { if (cats.indexOf(p.cat) === -1) cats.push(p.cat); });
+  cats.forEach(function (c) {
+    var b = document.createElement("button");
+    b.className = "chip" + (c === "All" ? " active" : "");
+    b.type = "button";
+    b.textContent = c;
+    b.setAttribute("role", "tab");
+    b.setAttribute("aria-selected", c === "All" ? "true" : "false");
+    b.addEventListener("click", function () {
+      activeCat = c;
+      Array.prototype.forEach.call(chipsEl.children, function (el) {
+        var on = el.textContent === c;
+        el.classList.toggle("active", on);
+        el.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      render();
+    });
+    chipsEl.appendChild(b);
+  });
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (m) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m];
+    });
+  }
+
+  function matches(p) {
+    if (activeCat !== "All" && p.cat !== activeCat) return false;
+    if (!query) return true;
+    var hay = (p.title + " " + p.authors + " " + p.venue).toLowerCase();
+    return hay.indexOf(query) !== -1;
+  }
+
+  function cardHtml(p) {
+    var isLocal = !!p.file;
+    var hasLink = isLocal || !!p.url;
+    var href = isLocal ? p.file : (p.url || "#");
+    var action;
+    if (isLocal) {
+      action = '<a class="dl-btn" href="' + href + '" download aria-label="Download PDF: ' + escapeHtml(p.title) + '">' + SVG_DL + "Download PDF</a>";
+    } else if (p.url) {
+      action = '<a class="dl-btn ext" href="' + href + '" target="_blank" rel="noopener noreferrer" aria-label="Open external link: ' + escapeHtml(p.title) + '">' + SVG_EXT + "View</a>";
+    } else {
+      action = '<span class="dl-btn na" aria-disabled="true" title="PDF / link not provided yet">PDF N/A</span>';
+    }
+    var titleEl = hasLink
+      ? '<a class="title" href="' + href + '" target="_blank"' + (isLocal ? "" : ' rel="noopener noreferrer"') + '>' + escapeHtml(p.title) + '</a>'
+      : '<span class="title">' + escapeHtml(p.title) + '</span>';
+    var venueLine = "<b>" + escapeHtml(p.venue) + "</b>" + (p.year ? ", " + escapeHtml(p.year) : "");
+    return '' +
+      '<article class="card" data-cat="' + escapeHtml(p.cat) + '">' +
+        '<div class="meta">' +
+          '<span class="cat-tag">' + escapeHtml(p.cat) + '</span>' +
+          titleEl +
+          '<div class="authors">' + escapeHtml(p.authors) + '</div>' +
+          '<div class="venue">' + venueLine + '</div>' +
+        '</div>' +
+        '<div class="action">' + action + '</div>' +
+      '</article>';
+  }
+
+  function render() {
+    var visible = papers.filter(matches);
+    var html = "";
+    var lastCat = null;
+    visible.forEach(function (p) {
+      if (p.cat !== lastCat) {
+        if (html) html += "</div>";
+        var inCat = papers.filter(function (x) { return x.cat === p.cat; }).length;
+        html += '<section class="section"><div class="section-head"><h2>' + escapeHtml(p.cat) + '</h2><span class="badge">' + inCat + "</span><span class=\"line\"></span></div><div class=\"cards\">";
+        lastCat = p.cat;
+      }
+      html += cardHtml(p);
+    });
+    if (html) html += "</div></section>";
+
+    main.innerHTML = html;
+    emptyEl.classList.toggle("hidden", visible.length !== 0);
+    var localCount = papers.filter(function (p) { return p.file; }).length;
+    countEl.textContent = visible.length + (visible.length === 1 ? " paper" : " papers") +
+      (activeCat === "All" && !query ? " · " + localCount + " downloadable" : "");
+  }
+
+  // ---- Search ----
+  searchEl.addEventListener("input", function () {
+    query = searchEl.value.trim().toLowerCase();
+    clearEl.style.display = query ? "grid" : "none";
+    render();
+  });
+  clearEl.addEventListener("click", function () {
+    searchEl.value = ""; query = ""; clearEl.style.display = "none"; searchEl.focus(); render();
+  });
+
+  footerStat.textContent = papers.length + " entries · " + papers.filter(function (p) { return p.file; }).length + " PDFs";
+
+  // ---- Toast ----
+  var toast = document.getElementById("toast");
+  var toastTimer;
+  function showToast(msg) {
+    toast.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' + escapeHtml(msg);
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 2600);
+  }
+
+  // ---- Download all (local PDFs only, sequential) ----
+  document.getElementById("downloadAll").addEventListener("click", function () {
+    var locals = papers.filter(function (p) { return p.file; });
+    if (!locals.length) { showToast("No downloadable PDFs"); return; }
+    showToast("Downloading " + locals.length + " PDFs…");
+    locals.forEach(function (p, i) {
+      setTimeout(function () {
+        var a = document.createElement("a");
+        a.href = p.file; a.download = ""; document.body.appendChild(a); a.click(); a.remove();
+        if (i === locals.length - 1) setTimeout(function () { showToast("Done — " + locals.length + " PDFs"); }, 400);
+      }, i * 350);
+    });
+  });
+
+  // ---- Theme ----
+  var root = document.documentElement;
+  var sun = document.querySelector("#themeToggle .sun");
+  var moon = document.querySelector("#themeToggle .moon");
+  function applyTheme(t) {
+    root.setAttribute("data-theme", t);
+    var dark = t === "dark";
+    sun.style.display = dark ? "none" : "block";
+    moon.style.display = dark ? "block" : "none";
+  }
+  var saved = null;
+  try { saved = localStorage.getItem("readings-theme"); } catch (e) {}
+  var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(saved || (prefersDark ? "dark" : "light"));
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(next);
+    try { localStorage.setItem("readings-theme", next); } catch (e) {}
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
